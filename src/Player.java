@@ -3,27 +3,49 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class Avatar {
+public class Player {
     private final int MOVE_AMT = 3;
     private BufferedImage right;
-    private BufferedImage left;
     private boolean facingRight;
+    private boolean isIdle;
     private int xCoord;
     private int yCoord;
-    private int score;
+    private Animation walking;
+    private Animation idling;
 
-    public Avatar() {
+    public Player() {
         facingRight = true;
+        isIdle = false;
         xCoord = 100;
-        yCoord = 435;
-        score = 0;
-        try {
-            left = ImageIO.read(new File("src/luigileft.png"));
-            right = ImageIO.read(new File("src/luigiright.png"));
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        yCoord = 300;
+
+//        ArrayList<BufferedImage> images = new ArrayList<>();
+//        for (int i = 1; i < 9; i++) {
+////            String filename = "src/tile00" + i + ".png";
+//            try {
+//                images.add(ImageIO.read(new File(filename)));
+//            }
+//            catch (IOException e) {
+//                System.out.println(e.getMessage());
+//            }
+//        }
+//        walking = new Animation(images,80);
+//
+//
+//        ArrayList<BufferedImage> idle = new ArrayList<>();
+//        for (int i = 1; i < 7; i++) {
+////            String filename = "src/idle00" + i + ".png";
+//            try {
+//                idle.add(ImageIO.read(new File(filename)));
+//            }
+//            catch (IOException e) {
+//                System.out.println(e.getMessage());
+//            }
+//        }
+//        idling = new Animation(idle,80);
+
     }
 
     public int getxCoord() {
@@ -32,10 +54,6 @@ public class Avatar {
 
     public int getyCoord() {
         return yCoord;
-    }
-
-    public int getScore() {
-        return score;
     }
 
     public void faceRight() {
@@ -78,6 +96,7 @@ public class Avatar {
 //            return left;
 //        }
 
+        return null;
     }
 
 
