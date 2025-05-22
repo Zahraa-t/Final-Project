@@ -13,7 +13,7 @@ public class Avatar {
     private int yCoord;
     private int score;
 
-    public Player2() {
+    public Avatar() {
         facingRight = true;
         xCoord = 100;
         yCoord = 435;
@@ -47,27 +47,27 @@ public class Avatar {
     }
 
     public void moveRight() {
-//        if (xCoord + MOVE_AMT <= 920) {
-//            xCoord += MOVE_AMT;
-//        }
+        if (xCoord + MOVE_AMT <= 347) {
+            xCoord += MOVE_AMT;
+        }
     }
 
     public void moveLeft() {
-//        if (xCoord - MOVE_AMT >= 0) {
-//            xCoord -= MOVE_AMT;
-//        }
+        if (xCoord - MOVE_AMT >= 0) {
+            xCoord -= MOVE_AMT;
+        }
     }
 
     public void moveUp() {
-//        if (yCoord - MOVE_AMT >= 0) {
-//            yCoord -= MOVE_AMT;
-//        }
+        if (yCoord - MOVE_AMT >= 0) {
+            yCoord -= MOVE_AMT;
+        }
     }
 
     public void moveDown() {
-//        if (yCoord + MOVE_AMT <= 435) {
-//            yCoord += MOVE_AMT;
-//        }
+        if (yCoord + MOVE_AMT <= 347) {
+            yCoord += MOVE_AMT;
+        }
     }
 
 
@@ -77,6 +77,7 @@ public class Avatar {
 //        } else {
 //            return left;
 //        }
+
     }
 
 

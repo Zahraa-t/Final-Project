@@ -5,7 +5,7 @@ public class ZFrame {
     public ZFrame() {
         JFrame frame = new JFrame("Title");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800,600);
+        frame.setSize(360,380);
         frame.setLocationRelativeTo(null);
 
         DisplayPanel panel = new DisplayPanel();
