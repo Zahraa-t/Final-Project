@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Player {
     private final int MOVE_AMT = 3;
-    private BufferedImage right;
+    private BufferedImage image;
     private boolean facingRight;
     private boolean isIdle;
     private int xCoord;
@@ -21,39 +21,55 @@ public class Player {
         xCoord = 100;
         yCoord = 300;
 
-//        ArrayList<BufferedImage> images = new ArrayList<>();
-//        for (int i = 1; i < 9; i++) {
-////            String filename = "src/tile00" + i + ".png";
-//            try {
-//                images.add(ImageIO.read(new File(filename)));
-//            }
-//            catch (IOException e) {
-//                System.out.println(e.getMessage());
-//            }
-//        }
-//        walking = new Animation(images,80);
-//
-//
-//        ArrayList<BufferedImage> idle = new ArrayList<>();
-//        for (int i = 1; i < 7; i++) {
-////            String filename = "src/idle00" + i + ".png";
-//            try {
-//                idle.add(ImageIO.read(new File(filename)));
-//            }
-//            catch (IOException e) {
-//                System.out.println(e.getMessage());
-//            }
-//        }
-//        idling = new Animation(idle,80);
+        ArrayList<BufferedImage> images = new ArrayList<>();
+        for (int i = 1; i < 9; i++) {
+            String filename = "src/walk00" + i + ".png";
+            try {
+                images.add(ImageIO.read(new File(filename)));
+            }
+            catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        walking = new Animation(images,80);
 
+
+        ArrayList<BufferedImage> idle = new ArrayList<>();
+        for (int i = 1; i < 7; i++) {
+            String filename = "src/tile00" + i + ".png";
+            try {
+                idle.add(ImageIO.read(new File(filename)));
+            }
+            catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        idling = new Animation(idle,80);
     }
 
     public int getxCoord() {
-        return xCoord;
+        if (facingRight) {
+            return xCoord;
+        } else {
+            return (xCoord + (getPlayerImage().getWidth()));
+        }
+
     }
 
     public int getyCoord() {
         return yCoord;
+    }
+
+    public int getHeight() {
+        return getPlayerImage().getHeight();
+    }
+
+    public int getWidth() {
+        if (facingRight) {
+            return getPlayerImage().getWidth();
+        } else {
+            return getPlayerImage().getWidth() * -1;
+        }
     }
 
     public void faceRight() {
@@ -90,17 +106,16 @@ public class Player {
 
 
     public BufferedImage getPlayerImage() {
-//        if (facingRight) {
-//            return right;
-//        } else {
-//            return left;
-//        }
-
-        return null;
+        if (isIdle) {
+            return idling.getActiveFrame();  // updated
+        } else {
+            return walking.getActiveFrame();  // updated
+        }
     }
 
-
-
+    public void setIdle(boolean idle) {
+        isIdle = idle;
+    }
 
     public Rectangle playerRect() {
         int imageHeight = getPlayerImage().getHeight();

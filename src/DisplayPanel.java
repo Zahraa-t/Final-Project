@@ -57,7 +57,9 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         if (!pressedKeys[65] && !pressedKeys[68] && !pressedKeys[87] && !pressedKeys[83]) {
             player.setIdle(true);
         }
-
+        if (!pressedKeys[65] && !pressedKeys[68] && !pressedKeys[87] && !pressedKeys[83]) {
+            player.setIdle(true);
+        }
     }
 
 
