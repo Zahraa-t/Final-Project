@@ -35,7 +35,7 @@ public class Player {
 
 
         ArrayList<BufferedImage> idle = new ArrayList<>();
-        for (int i = 1; i < 7; i++) {
+        for (int i = 1; i < 8; i++) {
             String filename = "src/tile00" + i + ".png";
             try {
                 idle.add(ImageIO.read(new File(filename)));

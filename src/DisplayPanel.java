@@ -17,6 +17,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
     private BufferedImage store;
     private Player player;
     private boolean[] pressedKeys;
+    private Timer timer;
 
     public DisplayPanel() {
         try {
@@ -26,7 +27,12 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         }
         player = new Player();
         pressedKeys = new boolean[128];
-
+        timer = new Timer(20, this);
+        timer.start();
+        addKeyListener(this);
+        addMouseListener(this);
+        setFocusable(true);
+        requestFocusInWindow();
     }
 
     @Override
