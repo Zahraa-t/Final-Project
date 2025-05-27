@@ -15,6 +15,7 @@ import java.io.IOException;
 
 public class DisplayPanel extends JPanel implements ActionListener, KeyListener, MouseListener {
     private BufferedImage store;
+    private BufferedImage shelves;
     private Player player;
     private boolean[] pressedKeys;
     private Timer timer;
@@ -27,10 +28,19 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+
+        try {
+            shelves = ImageIO.read(new File("src/shelves.png"));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+
         player = new Player();
         pressedKeys = new boolean[128];
         timer = new Timer(20, this);
         timer.start();
+        //In the top left
         area = "Store Front";
 
 
@@ -45,6 +55,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         super.paintComponent(g);
 
         g.drawImage(store, 0,0, null);
+        g.drawImage(shelves, 30,45,null);
         g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), player.getWidth(), player.getHeight(), null);
 
         if (pressedKeys[65]) {

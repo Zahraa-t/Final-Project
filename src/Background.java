@@ -31,6 +31,12 @@ public class Background {
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
+        } else if (num == 3) {
+            try {
+                back = ImageIO.read(new File("src/snackIsle.png"));
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         } else {
             try {
                 back = ImageIO.read(new File("src/freezer.png"));
