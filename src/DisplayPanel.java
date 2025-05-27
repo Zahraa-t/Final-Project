@@ -18,6 +18,8 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
     private Player player;
     private boolean[] pressedKeys;
     private Timer timer;
+    private String area;
+
 
     public DisplayPanel() {
         try {
@@ -29,6 +31,9 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         pressedKeys = new boolean[128];
         timer = new Timer(20, this);
         timer.start();
+        area = "Store Front";
+
+
         addKeyListener(this);
         addMouseListener(this);
         setFocusable(true);
@@ -59,9 +64,6 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         if (pressedKeys[83]) {
             player.setIdle(false);
             player.moveDown();
-        }
-        if (!pressedKeys[65] && !pressedKeys[68] && !pressedKeys[87] && !pressedKeys[83]) {
-            player.setIdle(true);
         }
         if (!pressedKeys[65] && !pressedKeys[68] && !pressedKeys[87] && !pressedKeys[83]) {
             player.setIdle(true);
