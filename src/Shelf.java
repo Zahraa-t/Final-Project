@@ -19,13 +19,13 @@ public class Shelf {
         }
     }
 
-    public int getxCoord() {
-        return xCoord;
-    }
-
-    public int getyCoord() {
-        return yCoord;
-    }
+//    public int getxCoord() {
+//        return xCoord;
+//    }
+//
+//    public int getyCoord() {
+//        return yCoord;
+//    }
 
     public BufferedImage getImage() {
         return image;

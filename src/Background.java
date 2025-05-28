@@ -14,10 +14,6 @@ public class Background {
         }
     }
 
-    public BufferedImage getBack() {
-        return back;
-    }
-
     public void setBack(int num) {
         if (num == 1) {
             try {
@@ -44,5 +40,12 @@ public class Background {
                 System.out.println(e.getMessage());
             }
         }
+
+
     }
+
+    public BufferedImage getBack() {
+        return back;
+    }
+
 }
