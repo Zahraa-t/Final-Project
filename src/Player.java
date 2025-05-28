@@ -15,12 +15,14 @@ public class Player {
     private Animation walking;
     private Animation idling;
     private boolean isTeleported;
+    //^ use to change movements
 
     public Player() {
         facingRight = true;
         isIdle = false;
-        xCoord = 100;
-        yCoord = 150;
+        xCoord = 200;
+        yCoord = 120;
+        isTeleported = false;
 
         ArrayList<BufferedImage> images = new ArrayList<>();
         for (int i = 1; i < 9; i++) {
@@ -84,25 +86,25 @@ public class Player {
     }
 
     public void moveRight() {
-        if (xCoord + MOVE_AMT <= 290) {
+        if (xCoord + MOVE_AMT <= 576) {
             xCoord += MOVE_AMT;
         }
     }
 
     public void moveLeft() {
-        if (xCoord - MOVE_AMT >= 22) {
+        if (xCoord - MOVE_AMT >= 0) {
             xCoord -= MOVE_AMT;
         }
     }
 
     public void moveUp() {
-        if (yCoord - MOVE_AMT >= 110) {
+        if (yCoord - MOVE_AMT >= 96) {
             yCoord -= MOVE_AMT;
         }
     }
 
     public void moveDown() {
-        if (yCoord + MOVE_AMT <= 280) {
+        if (yCoord + MOVE_AMT <= 330) {
             yCoord += MOVE_AMT;
         }
     }
@@ -127,6 +129,13 @@ public class Player {
         return rect;
     }
 
+    public boolean isTeleported() {
+        return isTeleported;
+    }
+
+    public void teleported() {
+        isTeleported = !isTeleported;
+    }
     //will change the moving functions to fit a 2D screen
     public void setTeleported(boolean teleported) {
         isTeleported = teleported;

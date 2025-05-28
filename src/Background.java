@@ -8,7 +8,7 @@ public class Background {
 
     public Background () {
         try {
-            back = ImageIO.read(new File("src/store.png"));
+            back = ImageIO.read(new File("src/newStore.png"));
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -21,13 +21,13 @@ public class Background {
     public void setBack(int num) {
         if (num == 1) {
             try {
-                back = ImageIO.read(new File("src/store.png"));
+                back = ImageIO.read(new File("src/newStore.png"));
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
         } else if (num == 2) {
             try {
-                back = ImageIO.read(new File("src/produce.png"));
+                back = ImageIO.read(new File("src/produceBackground.png"));
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
@@ -39,7 +39,7 @@ public class Background {
             }
         } else {
             try {
-                back = ImageIO.read(new File("src/freezer.png"));
+                back = ImageIO.read(new File("src/freezerBackground.png"));
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
