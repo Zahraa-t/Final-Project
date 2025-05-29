@@ -17,6 +17,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
     private BufferedImage background;
     private Player player;
     private Shelf shelves;
+    private Fridge fridge;
     private boolean[] pressedKeys;
     private Timer timer;
     private String area;
@@ -29,10 +30,11 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         background = b.getBack();
         player = new Player();
         pressedKeys = new boolean[128];
-        timer = new Timer(20, this);
+        timer = new Timer(60, this);
         timer.start();
         area = "Store";
         shelves = new Shelf(30,45);
+        fridge = new Fridge(180,90);
 
         addKeyListener(this);
         addMouseListener(this);
@@ -46,9 +48,12 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
 
         g.drawImage(background, 0,0, null);
         g.drawImage(shelves.getImage(), 30,45,null);
+        g.drawImage(fridge.getImage(), 180,90,null);
         g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), player.getWidth(), player.getHeight(), null);
         g.setFont(new Font("Times New Roman", Font.BOLD, 25));
         g.drawString(area,540,50);
+
+        player.setJump(false);
 
         if (pressedKeys[65]) {
             player.setIdle(false);
@@ -68,7 +73,15 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
             player.setIdle(false);
             player.moveDown();
         }
-        if (!pressedKeys[65] && !pressedKeys[68] && !pressedKeys[87] && !pressedKeys[83]) {
+        if (pressedKeys[32]) {
+            player.setJump(true);
+            int up = 5;
+            while (up >= 0) {
+                player.moveUp();
+                up--;
+            }
+        }
+        if (!pressedKeys[65] && !pressedKeys[68] && !pressedKeys[87] && !pressedKeys[83] && !pressedKeys[32]) {
             player.setIdle(true);
         }
 

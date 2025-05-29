@@ -4,16 +4,16 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Shelf {
+public class Fridge {
     private int xCoord;
     private int yCoord;
     private BufferedImage image;
 
-    public Shelf(int x, int y) {
+    public Fridge(int x, int y) {
         xCoord = x;
         yCoord = y;
         try {
-            image = ImageIO.read(new File("src/shelves.png"));
+            image = ImageIO.read(new File("src/fridge.png"));
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -23,7 +23,7 @@ public class Shelf {
         return image;
     }
 
-    public Rectangle shelfRect() {
+    public Rectangle fridgeRect() {
         int imageHeight = getImage().getHeight();
         int imageWidth = getImage().getWidth();
         Rectangle rect = new Rectangle(xCoord, yCoord, imageWidth, imageHeight);

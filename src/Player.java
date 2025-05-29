@@ -10,18 +10,20 @@ public class Player {
     private BufferedImage image;
     private boolean facingRight;
     private boolean isIdle;
+    private boolean isJump;
     private int xCoord;
     private int yCoord;
     private Animation walking;
     private Animation idling;
+    private Animation jumping;
     private boolean isTeleported;
-    //^ use to change movements
+    //^ use to change movements to 2D screen
 
     public Player() {
         facingRight = true;
         isIdle = false;
         xCoord = 200;
-        yCoord = 120;
+        yCoord = 320;
         isTeleported = false;
 
         ArrayList<BufferedImage> images = new ArrayList<>();
@@ -39,7 +41,7 @@ public class Player {
 
         ArrayList<BufferedImage> idle = new ArrayList<>();
         for (int i = 1; i < 8; i++) {
-            String filename = "src/tile00" + i + ".png";
+            String filename = "src/tile00" + i + "k.png";
             try {
                 idle.add(ImageIO.read(new File(filename)));
             }
@@ -49,7 +51,17 @@ public class Player {
         }
         idling = new Animation(idle,80);
 
-
+        ArrayList<BufferedImage> jump = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            String filename = "src/jump00" + i + ".png";
+            try {
+                jump.add(ImageIO.read(new File(filename)));
+            }
+            catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        jumping = new Animation(jump,200);
     }
 
     public int getxCoord() {
@@ -58,7 +70,6 @@ public class Player {
         } else {
             return (xCoord + (getPlayerImage().getWidth()));
         }
-
     }
 
     public int getyCoord() {
@@ -113,6 +124,8 @@ public class Player {
     public BufferedImage getPlayerImage() {
         if (isIdle) {
             return idling.getActiveFrame();  // updated
+        } else if (isJump) {
+            return jumping.getActiveFrame();
         } else {
             return walking.getActiveFrame();  // updated
         }
@@ -121,6 +134,10 @@ public class Player {
     public void setIdle(boolean idle) {
         isIdle = idle;
     }
+    public void setJump(boolean jump) {
+        isJump = jump;
+    }
+
 
     public Rectangle playerRect() {
         int imageHeight = getPlayerImage().getHeight();
