@@ -24,7 +24,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
 
 
     public DisplayPanel() {
-        Background b = new Background();
+        b = new Background();
         b.setBack(1);
         background = b.getBack();
         player = new Player();
@@ -73,8 +73,8 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         }
 
         if (player.playerRect().intersects(shelves.shelfRect())) {
-//            b.setBack(2);
-//            background = b.getBack();
+            b.setBack(2);
+            background = b.getBack();
         }
     }
 
