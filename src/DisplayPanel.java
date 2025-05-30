@@ -73,14 +73,6 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
             player.setIdle(false);
             player.moveDown();
         }
-        if (pressedKeys[32]) {
-            player.setJump(true);
-            int up = 5;
-            while (up >= 0) {
-                player.moveUp();
-                up--;
-            }
-        }
         if (!pressedKeys[65] && !pressedKeys[68] && !pressedKeys[87] && !pressedKeys[83] && !pressedKeys[32]) {
             player.setIdle(true);
         }

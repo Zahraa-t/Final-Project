@@ -51,17 +51,17 @@ public class Player {
         }
         idling = new Animation(idle,80);
 
-        ArrayList<BufferedImage> jump = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            String filename = "src/jump00" + i + ".png";
-            try {
-                jump.add(ImageIO.read(new File(filename)));
-            }
-            catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        jumping = new Animation(jump,200);
+//        ArrayList<BufferedImage> jump = new ArrayList<>();
+//        for (int i = 0; i < 5; i++) {
+//            String filename = "src/jump00" + i + ".png";
+//            try {
+//                jump.add(ImageIO.read(new File(filename)));
+//            }
+//            catch (IOException e) {
+//                System.out.println(e.getMessage());
+//            }
+//        }
+//        jumping = new Animation(jump,200);
     }
 
     public int getxCoord() {
