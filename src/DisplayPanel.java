@@ -16,12 +16,16 @@ import java.io.IOException;
 public class DisplayPanel extends JPanel implements ActionListener, KeyListener, MouseListener {
     private BufferedImage background;
     private Player player;
-    private Shelf shelves;
-    private Fridge fridge;
     private boolean[] pressedKeys;
     private Timer timer;
     private String area;
     private Background b;
+    private Furniture shelves;
+    private Furniture fruits;
+    private Furniture fridge;
+    private Furniture register;
+    private Furniture side;
+    private Furniture books;
 
 
     public DisplayPanel() {
@@ -33,8 +37,12 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         timer = new Timer(60, this);
         timer.start();
         area = "Store";
-        shelves = new Shelf(30,45);
-        fridge = new Fridge(180,90);
+        shelves = new Furniture(30,45,1);
+        fruits = new Furniture(20, 300, 2);
+        fridge = new Furniture(380,60,3);
+        register = new Furniture(400, 300, 4);
+        side = new Furniture(5);
+        books = new Furniture(6);
 
         addKeyListener(this);
         addMouseListener(this);
@@ -47,8 +55,17 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         super.paintComponent(g);
 
         g.drawImage(background, 0,0, null);
-        g.drawImage(shelves.getImage(), 30,45,null);
-        g.drawImage(fridge.getImage(), 180,90,null);
+        g.drawImage(shelves.getImage(), shelves.getxCoord(), shelves.getyCoord() ,null);
+        g.drawImage(fruits.getImage(), 20,300,null);
+        g.drawImage(fruits.getImage(), 100,300,null);
+        g.drawImage(fridge.getImage(), 380,60,null);
+        g.drawImage(register.getImage(), 520,200,null);
+        g.drawImage(books.getImage(), 390, 305,null);
+        g.drawImage(side.getImage(), 155, 70, null);
+        g.drawImage(side.getImage(), 155, 120, null);
+
+
+
         g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), player.getWidth(), player.getHeight(), null);
         g.setFont(new Font("Times New Roman", Font.BOLD, 25));
         g.drawString(area,540,50);
@@ -77,8 +94,16 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
             player.setIdle(true);
         }
 
-        if (player.playerRect().intersects(shelves.shelfRect())) {
+        if (player.playerRect().intersects(shelves.box())) {
+            b.setBack(3);
+            background = b.getBack();
+        }
+        if (player.playerRect().intersects(fruits.box())) {
             b.setBack(2);
+            background = b.getBack();
+        }
+        if (player.playerRect().intersects(fridge.box())) {
+            b.setBack(4);
             background = b.getBack();
         }
     }

@@ -12,11 +12,7 @@ public class Fridge {
     public Fridge(int x, int y) {
         xCoord = x;
         yCoord = y;
-        try {
-            image = ImageIO.read(new File("src/fridge.png"));
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+
     }
 
     public BufferedImage getImage() {
