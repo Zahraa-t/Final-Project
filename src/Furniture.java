@@ -36,12 +36,7 @@ public class Furniture {
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
-        }
-
-    }
-
-    public Furniture(int identify) {
-        if (identify == 5) {
+        } else if (identify == 5) {
             try {
                 image = ImageIO.read(new File("src/sideShelf1.png"));
             } catch (IOException e) {

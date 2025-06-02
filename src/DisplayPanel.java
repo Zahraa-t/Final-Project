@@ -12,6 +12,9 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class DisplayPanel extends JPanel implements ActionListener, KeyListener, MouseListener {
     private BufferedImage background;
@@ -22,11 +25,14 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
     private Background b;
     private Furniture shelves;
     private Furniture fruits;
+    private Furniture fruits2;
     private Furniture fridge;
     private Furniture register;
-    private Furniture side;
+    private Furniture sideShelf;
+    private Furniture sideShelf2;
     private Furniture books;
-
+//    private ArrayList<Rectangle> boxes;
+//    private boolean canMove;
 
     public DisplayPanel() {
         b = new Background();
@@ -34,15 +40,19 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         background = b.getBack();
         player = new Player();
         pressedKeys = new boolean[128];
-        timer = new Timer(60, this);
+        timer = new Timer(20, this);
         timer.start();
         area = "Store";
         shelves = new Furniture(30,45,1);
         fruits = new Furniture(20, 300, 2);
+        fruits2 = new Furniture(100,300,2);
         fridge = new Furniture(380,60,3);
         register = new Furniture(400, 300, 4);
-        side = new Furniture(5);
-        books = new Furniture(6);
+        sideShelf = new Furniture(155, 70,5);
+        sideShelf2 = new Furniture(155, 120,5);
+        books = new Furniture(390, 305,6);
+//        boxes = new ArrayList<>(Arrays.asList(shelves.box(), fruits.box(),fruits2.box(), fridge.box(), register.box(),sideShelf.box(), sideShelf2.box(),books.box()));
+//        canMove = true;
 
         addKeyListener(this);
         addMouseListener(this);
@@ -57,25 +67,23 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         g.drawImage(background, 0,0, null);
         g.drawImage(shelves.getImage(), shelves.getxCoord(), shelves.getyCoord() ,null);
         g.drawImage(fruits.getImage(), 20,300,null);
-        g.drawImage(fruits.getImage(), 100,300,null);
+        g.drawImage(fruits2.getImage(), 100,300,null);
         g.drawImage(fridge.getImage(), 380,60,null);
         g.drawImage(register.getImage(), 520,200,null);
         g.drawImage(books.getImage(), 390, 305,null);
-        g.drawImage(side.getImage(), 155, 70, null);
-        g.drawImage(side.getImage(), 155, 120, null);
-
-
+        g.drawImage(sideShelf.getImage(), 155, 70, null);
+        g.drawImage(sideShelf2.getImage(), 155, 120, null);
 
         g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), player.getWidth(), player.getHeight(), null);
-        g.setFont(new Font("Times New Roman", Font.BOLD, 25));
+        g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         g.drawString(area,540,50);
 
-        player.setJump(false);
 
         if (pressedKeys[65]) {
             player.setIdle(false);
             player.faceLeft();
             player.moveLeft();
+
         }
         if (pressedKeys[68]) {
             player.setIdle(false);
@@ -92,6 +100,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         }
         if (!pressedKeys[65] && !pressedKeys[68] && !pressedKeys[87] && !pressedKeys[83] && !pressedKeys[32]) {
             player.setIdle(true);
+
         }
 
         if (player.playerRect().intersects(shelves.box())) {
@@ -113,6 +122,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
     public void actionPerformed(ActionEvent e) {
         repaint();
     }
+
     // KeyListener interface methods
     @Override
     public void keyTyped(KeyEvent e) { } // unimplemented
