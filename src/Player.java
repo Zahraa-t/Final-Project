@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.concurrent.Future;
 
 public class Player {
-    private final int MOVE_AMT = 6;
+    private final int MOVE_AMT = 8;
     private BufferedImage image;
     private boolean facingRight;
     private boolean isIdle;
@@ -86,27 +86,43 @@ public class Player {
     }
 
     public void moveRight() {
-        if (xCoord + MOVE_AMT <= 580) {
+        if ((xCoord + MOVE_AMT <= 100 && yCoord + MOVE_AMT <= 190)) {
+            //add a new boundary for a new x coord
             xCoord += MOVE_AMT;
         }
+//        if (){
+//            xCoord += MOVE_AMT;
+//        }
     }
 
     public void moveLeft() {
-        if (xCoord - MOVE_AMT >= 0) {
+        if (xCoord - MOVE_AMT >= 155) {
+            xCoord -= MOVE_AMT;
+        } else if (xCoord - MOVE_AMT >= 0) {
             xCoord -= MOVE_AMT;
         }
     }
 
     public void moveUp() {
-        if (yCoord - MOVE_AMT >= 96) {
+        if (!isTeleported) {
+            if (((xCoord + MOVE_AMT >= 0 && xCoord + MOVE_AMT <= 115) && yCoord - MOVE_AMT >= 100) || (xCoord + MOVE_AMT >= 115 && xCoord + MOVE_AMT <= 145 && yCoord - MOVE_AMT >= 185) || (xCoord + MOVE_AMT >= 145 && yCoord - MOVE_AMT >= 110)) {
+                //
+                yCoord -= MOVE_AMT;
+            }
+        } else if (yCoord - MOVE_AMT >= 0) {
             yCoord -= MOVE_AMT;
         }
     }
 
     public void moveDown() {
-        if (((xCoord + MOVE_AMT <= 370 && xCoord + MOVE_AMT >= 160) && yCoord + MOVE_AMT <= 340) || (xCoord + MOVE_AMT >= 370 && yCoord + MOVE_AMT <= 260) || (xCoord + MOVE_AMT <= 160 && yCoord + MOVE_AMT <= 270)) {
+        if (!isTeleported) {
+            if (((xCoord + MOVE_AMT <= 370 && xCoord + MOVE_AMT >= 160) && yCoord + MOVE_AMT <= 340) || (xCoord + MOVE_AMT >= 370 && yCoord + MOVE_AMT <= 260) || (xCoord + MOVE_AMT <= 160 && yCoord + MOVE_AMT <= 270)) {
+                yCoord += MOVE_AMT;
+            }
+        } else if (yCoord <= 320) {
             yCoord += MOVE_AMT;
         }
+
     }
 
     public BufferedImage getPlayerImage() {
@@ -133,7 +149,7 @@ public class Player {
         return isTeleported;
     }
 
-    public void teleported() {
-        isTeleported = !isTeleported;
+    public void teleported(boolean t) {
+        isTeleported = t;
     }
 }
