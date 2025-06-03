@@ -86,18 +86,22 @@ public class Player {
     }
 
     public void moveRight() {
-        if ((xCoord + MOVE_AMT <= 100 && yCoord + MOVE_AMT <= 190)) {
-            //add a new boundary for a new x coord
+        if (!isTeleported) {
+            if ((xCoord + MOVE_AMT <= 100 && yCoord + MOVE_AMT <= 300) || (xCoord + MOVE_AMT > 100 && xCoord + MOVE_AMT <= 140 && yCoord + MOVE_AMT >= 190) || (xCoord + MOVE_AMT > 140 && xCoord + MOVE_AMT <= 365) || (xCoord + MOVE_AMT > 365 && xCoord + MOVE_AMT <= 490 && yCoord + MOVE_AMT <= 285)) {
+                //add a new boundary for a new x coord
+                xCoord += MOVE_AMT;
+            }
+
+        } else if (xCoord + MOVE_AMT <= 550) {
             xCoord += MOVE_AMT;
         }
-//        if (){
-//            xCoord += MOVE_AMT;
-//        }
     }
 
     public void moveLeft() {
-        if (xCoord - MOVE_AMT >= 155) {
-            xCoord -= MOVE_AMT;
+        if (!isTeleported) {
+            if ((xCoord - MOVE_AMT >= 155 && xCoord - MOVE_AMT <= 500) || (xCoord - MOVE_AMT < 155 && xCoord - MOVE_AMT >= 100 && yCoord + MOVE_AMT >= 200 && yCoord + MOVE_AMT <= 280) || (xCoord - MOVE_AMT < 100 &&xCoord - MOVE_AMT > 0 )) {
+                xCoord -= MOVE_AMT;
+            }
         } else if (xCoord - MOVE_AMT >= 0) {
             xCoord -= MOVE_AMT;
         }
@@ -116,7 +120,7 @@ public class Player {
 
     public void moveDown() {
         if (!isTeleported) {
-            if (((xCoord + MOVE_AMT <= 370 && xCoord + MOVE_AMT >= 160) && yCoord + MOVE_AMT <= 340) || (xCoord + MOVE_AMT >= 370 && yCoord + MOVE_AMT <= 260) || (xCoord + MOVE_AMT <= 160 && yCoord + MOVE_AMT <= 270)) {
+            if (((xCoord + MOVE_AMT <= 370 && xCoord + MOVE_AMT >= 160) && yCoord + MOVE_AMT <= 330) || (xCoord + MOVE_AMT >= 370 && xCoord + MOVE_AMT < 500 && yCoord + MOVE_AMT <= 260) || (xCoord + MOVE_AMT <= 160 && yCoord + MOVE_AMT <= 270) || (xCoord + MOVE_AMT > 490 && xCoord + MOVE_AMT < 570 && yCoord + MOVE_AMT <= 190)) {
                 yCoord += MOVE_AMT;
             }
         } else if (yCoord <= 320) {

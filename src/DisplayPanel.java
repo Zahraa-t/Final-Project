@@ -31,6 +31,8 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
     private Furniture sideShelf;
     private Furniture sideShelf2;
     private Furniture books;
+    private Furniture couch;
+    private Furniture plant;
 //    private ArrayList<Rectangle> boxes;
 //    private boolean canMove;
 
@@ -51,6 +53,8 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         sideShelf = new Furniture(155, 70,5);
         sideShelf2 = new Furniture(155, 120,5);
         books = new Furniture(390, 305,6);
+        couch = new Furniture(545,145,7);
+        plant = new Furniture(545,130,8);
 //        boxes = new ArrayList<>(Arrays.asList(shelves.box(), fruits.box(),fruits2.box(), fridge.box(), register.box(),sideShelf.box(), sideShelf2.box(),books.box()));
 //        canMove = true;
 
@@ -73,36 +77,39 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
             g.drawImage(fruits2.getImage(), 100, 300, null);
             g.drawImage(fridge.getImage(), 430, 60, null);
             g.drawImage(fridge.getImage(), 485, 60, null);
+            g.drawImage(plant.getImage(), 555,110, null);
+            g.drawImage(couch.getImage(), 545,145,null);
             g.drawImage(register.getImage(), 520, 200, null);
             g.drawImage(books.getImage(), 390, 305, null);
             g.drawImage(sideShelf.getImage(), 125, 60, null);
             g.drawImage(sideShelf2.getImage(), 125, 110, null);
-            //fix the rectangle boxes to match this^^^^^
 
             g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), player.getWidth(), player.getHeight(), null);
             g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+            g.setColor(Color.black);
             g.drawString(area,540,50);
 
-//            if (player.playerRect().intersects(shelves.box())) {
-//                b.setBack(3);
-//                background = b.getBack();
-//                player.teleported(true);
-//                area = "\"Produce\"";
-//                //fix sign placement ^
-//            }
-//            if (player.playerRect().intersects(fruits2.box())) {
-//                b.setBack(2);
-//                background = b.getBack();
-//                player.teleported(true);
-//            }
-//            if (player.playerRect().intersects(fridge.box())) {
-//                b.setBack(4);
-//                background = b.getBack();
-//                player.teleported(true);
-//            }
+            if (player.playerRect().intersects(shelves.box())) {
+                b.setBack(3);
+                background = b.getBack();
+                player.teleported(true);
+                area = "\"Produce\"";
+                //fix sign placement ^
+            }
+            if (player.playerRect().intersects(fruits2.box())) {
+                b.setBack(2);
+                background = b.getBack();
+                player.teleported(true);
+            }
+            if (player.playerRect().intersects(fridge.box())) {
+                b.setBack(4);
+                background = b.getBack();
+                player.teleported(true);
+            }
         } else {
             g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), player.getWidth(), player.getHeight(), null);
             g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+            g.setColor(Color.white);
             g.drawString(area,540,50);
         }
 
