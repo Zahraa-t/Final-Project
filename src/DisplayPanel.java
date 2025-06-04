@@ -15,12 +15,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class DisplayPanel extends JPanel implements ActionListener, KeyListener, MouseListener {
     private BufferedImage background;
     private Player player;
     private boolean[] pressedKeys;
     private Timer timer;
+    private Timer timer2;
+
     private String area;
     private Background b;
     private Furniture shelves;
@@ -33,6 +36,10 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
     private Furniture books;
     private Furniture couch;
     private Furniture plant;
+    private Enemy cat;
+    private int catX;
+    private int catY;
+    private int map;
 //    private ArrayList<Rectangle> boxes;
 //    private boolean canMove;
 
@@ -42,9 +49,16 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         background = b.getBack();
         player = new Player();
         pressedKeys = new boolean[128];
-        timer = new Timer(20, this);
+        timer = new Timer(10, this);
         timer.start();
+        timer2 = new Timer(0, this);
+        timer2.start();
         area = "Store";
+        catX = 0;
+        catY = 0;
+        map = 0;
+        cat = new Enemy();
+
         shelves = new Furniture(0,45,1);
         fruits = new Furniture(20, 300, 2);
         fruits2 = new Furniture(100,300,2);
@@ -95,23 +109,34 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
                 player.teleported(true);
                 area = "\"Produce\"";
                 //fix sign placement ^
+                map = 1;
             }
             if (player.playerRect().intersects(fruits2.box())) {
                 b.setBack(2);
                 background = b.getBack();
                 player.teleported(true);
+                map = 2;
             }
             if (player.playerRect().intersects(fridge.box())) {
                 b.setBack(4);
                 background = b.getBack();
                 player.teleported(true);
+                map = 3;
             }
         } else {
             g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), player.getWidth(), player.getHeight(), null);
             g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
             g.setColor(Color.white);
-            g.drawString(area,540,50);
+            g.drawString(area,500,50);
+            if (map == 1) {
+                g.drawImage(cat.getPlayerImage(), catX, cat.getyCoord(), null);
+                g.drawImage(cat.getPlayerImage(), catX, cat.getyCoord() + 100, null);
+                g.drawImage(cat.getPlayerImage(), cat.getxCoord(), catY, null);
+
+            }
         }
+
+
 
 
         if (pressedKeys[65]) {
@@ -143,6 +168,18 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Object o = e.getSource();
+        if (o == timer2) {
+            catX++;
+            if (catX > 580) {
+                catX = 0;
+            }
+            catY++;
+            if (catY > 300) {
+                catY = 0;
+            }
+        }
+
         repaint();
     }
 

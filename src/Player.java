@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.concurrent.Future;
 
 public class Player {
-    private final int MOVE_AMT = 8;
+    private final int MOVE_AMT = 4;
     private BufferedImage image;
     private boolean facingRight;
     private boolean isIdle;
