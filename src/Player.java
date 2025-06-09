@@ -18,14 +18,22 @@ public class Player {
     private Animation walking;
     private Animation idling;
     private boolean isTeleported;
-    //^ will use to change movements to 2D screen
+    private ArrayList<String> groceries;
+    private ArrayList<String> options;
+    private int xStarting;
+    private int yStarting;
+
 
     public Player() {
         facingRight = true;
         isIdle = false;
         xCoord = 310;
-        yCoord = 320;
+        yCoord = 220;
         isTeleported = false;
+        groceries = new ArrayList<>();
+        options = new ArrayList<>();
+        xStarting = 310;
+        yStarting = 320;
 
         ArrayList<BufferedImage> images = new ArrayList<>();
         for (int i = 1; i < 9; i++) {
@@ -63,6 +71,16 @@ public class Player {
 
     public int getyCoord() {
         return yCoord;
+    }
+
+    public void spawnPoint(int x, int y) {
+        xStarting = x;
+        yStarting = y;
+    }
+
+    public void respawn() {
+        xCoord = xStarting;
+        yCoord = yStarting;
     }
 
     public int getHeight() {
@@ -148,12 +166,30 @@ public class Player {
         return rect;
     }
 
-
-    public boolean isTeleported() {
-        return isTeleported;
-    }
+//    public boolean isTeleported() {
+//        return isTeleported;
+//    }
 
     public void teleported(boolean t) {
         isTeleported = t;
+    }
+
+    public void formList() {
+        options.add("Bell Peppers");
+        options.add("Cabbage");
+        options.add("Grapes");
+        options.add("Strawberry Ice Cream");
+        options.add("Eggs");
+        options.add("Milk");
+        options.add("Hot Cocoa");
+        options.add("Strawberry Jam");
+        options.add("Potato Chips");
+
+        for (int i = 0; i <= 6; i++) {
+            int itemNum = (int) (Math.random() * options.size()) + 1;
+            //check if it generates correctly
+            groceries.add(options.get(itemNum));
+            options.remove(itemNum);
+        }
     }
 }

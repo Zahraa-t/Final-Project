@@ -10,13 +10,24 @@ public class Enemy {
     private int xCoord;
     private int yCoord;
 
-    public Enemy() {
+    public Enemy(int op) {
         xCoord = 100;
         yCoord = 100;
-        try {
-            image = ImageIO.read(new File("src/boxCat.png"));
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+        if (op == 1) {
+            try {
+                image = ImageIO.read(new File("src/boxCat.png"));
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            try {
+//                image = ImageIO.read(new File("src/boxCatBIG2.png"));
+                image = ImageIO.read(new File("src/cloud1.png"));
+                image = ImageIO.read(new File("src/cloud3.png"));
+
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
@@ -32,10 +43,16 @@ public class Enemy {
         return image;
     }
 
-    public Rectangle enemyRect(int x) {
+    public Rectangle enemyRect(int theX) {
         int imageHeight = getPlayerImage().getHeight();
         int imageWidth = getPlayerImage().getWidth();
-        Rectangle rect = new Rectangle(x, yCoord, imageWidth, imageHeight);
+        Rectangle rect = new Rectangle(theX, yCoord, imageWidth, imageHeight);
+        return rect;
+    }
+    public Rectangle enemyRect2(int theY) {
+        int imageHeight = getPlayerImage().getHeight();
+        int imageWidth = getPlayerImage().getWidth();
+        Rectangle rect = new Rectangle(xCoord, theY, imageWidth, imageHeight);
         return rect;
     }
 }
