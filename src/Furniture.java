@@ -48,6 +48,24 @@ public class Furniture {
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
+        } else if (identify == 7) {
+            try {
+                image = ImageIO.read(new File("src/couch.png"));
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        } else if (identify == 8) {
+            try {
+                image = ImageIO.read(new File("src/plant.png"));
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        } else if (identify == 9) {
+            try {
+                image = ImageIO.read(new File("src/rug.png"));
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 

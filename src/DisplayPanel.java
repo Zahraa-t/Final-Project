@@ -15,15 +15,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class DisplayPanel extends JPanel implements ActionListener, KeyListener, MouseListener {
     private BufferedImage background;
     private Player player;
     private boolean[] pressedKeys;
     private Timer timer;
+    private Timer timer2;
+
     private String area;
     private Background b;
     private Furniture shelves;
+    private Furniture shelves2;
     private Furniture fruits;
     private Furniture fruits2;
     private Furniture fridge;
@@ -31,8 +35,17 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
     private Furniture sideShelf;
     private Furniture sideShelf2;
     private Furniture books;
-//    private ArrayList<Rectangle> boxes;
-//    private boolean canMove;
+    private Furniture couch;
+    private Furniture plant;
+    private Enemy cat;
+    private Enemy cat2;
+    private Enemy cat3;
+    private int catX;
+    private int catY;
+    private int map;
+    private ArrayList<Rectangle> boxes;
+    private BufferedImage cabbage;
+    private BufferedImage bellPepper;
 
     public DisplayPanel() {
         b = new Background();
@@ -40,19 +53,43 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         background = b.getBack();
         player = new Player();
         pressedKeys = new boolean[128];
-        timer = new Timer(20, this);
+        timer = new Timer(10, this);
         timer.start();
+        timer2 = new Timer(0, this);
+        timer2.start();
         area = "Store";
-        shelves = new Furniture(30,45,1);
+        catX = 0;
+        catY = 0;
+        map = 0;
+        cat = new Enemy(1);
+        cat2 = new Enemy(1);
+        cat3 = new Enemy(2);
+
+        shelves = new Furniture(0,45,1);
+        shelves2 = new Furniture(145, shelves.getyCoord(),1);
         fruits = new Furniture(20, 300, 2);
         fruits2 = new Furniture(100,300,2);
-        fridge = new Furniture(380,60,3);
+        fridge = new Furniture(430,60,3);
         register = new Furniture(400, 300, 4);
         sideShelf = new Furniture(155, 70,5);
         sideShelf2 = new Furniture(155, 120,5);
         books = new Furniture(390, 305,6);
+        couch = new Furniture(545,145,7);
+        plant = new Furniture(545,130,8);
 //        boxes = new ArrayList<>(Arrays.asList(shelves.box(), fruits.box(),fruits2.box(), fridge.box(), register.box(),sideShelf.box(), sideShelf2.box(),books.box()));
 //        canMove = true;
+        boxes = new ArrayList<>(Arrays.asList(cat.enemyRect(catX),cat2.enemyRect(catX),cat3.enemyRect2(catY)));
+
+        try {
+            cabbage = ImageIO.read(new File("src/cabbage_p.png"));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            bellPepper = ImageIO.read(new File("src/bell_pepper_p.png"));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 
         addKeyListener(this);
         addMouseListener(this);
@@ -63,20 +100,64 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        g.drawImage(background, 0, 0, null);
 
-        g.drawImage(background, 0,0, null);
-        g.drawImage(shelves.getImage(), shelves.getxCoord(), shelves.getyCoord() ,null);
-        g.drawImage(fruits.getImage(), 20,300,null);
-        g.drawImage(fruits2.getImage(), 100,300,null);
-        g.drawImage(fridge.getImage(), 380,60,null);
-        g.drawImage(register.getImage(), 520,200,null);
-        g.drawImage(books.getImage(), 390, 305,null);
-        g.drawImage(sideShelf.getImage(), 155, 70, null);
-        g.drawImage(sideShelf2.getImage(), 155, 120, null);
+        if (map == 0) {
+            g.drawImage(shelves.getImage(), shelves.getxCoord(), shelves.getyCoord(), null);
+            g.drawImage(shelves2.getImage(), 145, shelves2.getyCoord(), null);
+            g.drawImage(shelves2.getImage(), 274, shelves2.getyCoord(), null);
+            g.drawImage(fruits.getImage(), 20, 300, null);
+            g.drawImage(fruits2.getImage(), 100, 300, null);
+            g.drawImage(fridge.getImage(), 430, 60, null);
+            g.drawImage(fridge.getImage(), 485, 60, null);
+            g.drawImage(plant.getImage(), 555,110, null);
+            g.drawImage(couch.getImage(), 545,145,null);
+            g.drawImage(register.getImage(), 520, 200, null);
+            g.drawImage(books.getImage(), 390, 305, null);
+            g.drawImage(sideShelf.getImage(), 125, 60, null);
+            g.drawImage(sideShelf2.getImage(), 125, 110, null);
+
+            g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+            g.setColor(Color.black);
+            g.drawString(area,540,50);
+
+            if (player.playerRect().intersects(shelves.box())) {
+                b.setBack(3);
+                background = b.getBack();
+                player.teleported(true);
+                area = "Produce";
+                //fix sign placement ^
+                map = 1;
+                player.spawnPoint(500,170);
+            }
+            if (player.playerRect().intersects(fruits2.box())) {
+                b.setBack(2);
+                background = b.getBack();
+                player.teleported(true);
+                map = 2;
+            }
+            if (player.playerRect().intersects(fridge.box())) {
+                b.setBack(4);
+                background = b.getBack();
+                player.teleported(true);
+                map = 3;
+            }
+        } else if (map == 1){
+            g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+            g.setColor(Color.white);
+            g.drawString(area,520,50);
+            g.drawImage(cat.getPlayerImage(), catX, cat.getyCoord(), null);
+            g.drawImage(cat2.getPlayerImage(), catX, cat.getyCoord() + 100, null);
+            g.drawImage(cat3.getPlayerImage(), cat.getxCoord(), catY, null);
+            g.drawImage(cabbage,245,50, null);
+            for (Rectangle box : boxes) {
+                if (player.playerRect().intersects(box)) {
+                    player.respawn();
+                }
+            }
+        }
 
         g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), player.getWidth(), player.getHeight(), null);
-        g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        g.drawString(area,540,50);
 
 
         if (pressedKeys[65]) {
@@ -100,26 +181,24 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         }
         if (!pressedKeys[65] && !pressedKeys[68] && !pressedKeys[87] && !pressedKeys[83] && !pressedKeys[32]) {
             player.setIdle(true);
-
-        }
-
-        if (player.playerRect().intersects(shelves.box())) {
-            b.setBack(3);
-            background = b.getBack();
-        }
-        if (player.playerRect().intersects(fruits.box())) {
-            b.setBack(2);
-            background = b.getBack();
-        }
-        if (player.playerRect().intersects(fridge.box())) {
-            b.setBack(4);
-            background = b.getBack();
         }
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Object o = e.getSource();
+        if (o == timer2) {
+            catX++;
+            if (catX > 580) {
+                catX = 0;
+            }
+            catY++;
+            if (catY > 300) {
+                catY = 0;
+            }
+        }
+
         repaint();
     }
 

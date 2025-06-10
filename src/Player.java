@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.concurrent.Future;
 
 public class Player {
-    private final int MOVE_AMT = 6;
+    private final int MOVE_AMT = 4;
     private BufferedImage image;
     private boolean facingRight;
     private boolean isIdle;
@@ -18,14 +18,22 @@ public class Player {
     private Animation walking;
     private Animation idling;
     private boolean isTeleported;
-    //^ will use to change movements to 2D screen
+    private ArrayList<String> groceries;
+    private ArrayList<String> options;
+    private int xStarting;
+    private int yStarting;
+
 
     public Player() {
         facingRight = true;
         isIdle = false;
         xCoord = 310;
-        yCoord = 320;
+        yCoord = 220;
         isTeleported = false;
+        groceries = new ArrayList<>();
+        options = new ArrayList<>();
+        xStarting = 310;
+        yStarting = 320;
 
         ArrayList<BufferedImage> images = new ArrayList<>();
         for (int i = 1; i < 9; i++) {
@@ -65,6 +73,16 @@ public class Player {
         return yCoord;
     }
 
+    public void spawnPoint(int x, int y) {
+        xStarting = x;
+        yStarting = y;
+    }
+
+    public void respawn() {
+        xCoord = xStarting;
+        yCoord = yStarting;
+    }
+
     public int getHeight() {
         return getPlayerImage().getHeight();
     }
@@ -86,27 +104,47 @@ public class Player {
     }
 
     public void moveRight() {
-        if (xCoord + MOVE_AMT <= 580) {
+        if (!isTeleported) {
+            if ((xCoord + MOVE_AMT <= 100 && yCoord + MOVE_AMT <= 300) || (xCoord + MOVE_AMT > 100 && xCoord + MOVE_AMT <= 140 && yCoord + MOVE_AMT >= 190) || (xCoord + MOVE_AMT > 140 && xCoord + MOVE_AMT <= 365) || (xCoord + MOVE_AMT > 365 && xCoord + MOVE_AMT <= 490 && yCoord + MOVE_AMT <= 285)) {
+                //add a new boundary for a new x coord
+                xCoord += MOVE_AMT;
+            }
+
+        } else if (xCoord + MOVE_AMT <= 550) {
             xCoord += MOVE_AMT;
         }
     }
 
     public void moveLeft() {
-        if (xCoord - MOVE_AMT >= 0) {
+        if (!isTeleported) {
+            if ((xCoord - MOVE_AMT >= 155 && xCoord - MOVE_AMT <= 500) || (xCoord - MOVE_AMT < 155 && xCoord - MOVE_AMT >= 100 && yCoord + MOVE_AMT >= 200 && yCoord + MOVE_AMT <= 280) || (xCoord - MOVE_AMT < 100 &&xCoord - MOVE_AMT > 0 )) {
+                xCoord -= MOVE_AMT;
+            }
+        } else if (xCoord - MOVE_AMT >= 0) {
             xCoord -= MOVE_AMT;
         }
     }
 
     public void moveUp() {
-        if (yCoord - MOVE_AMT >= 96) {
+        if (!isTeleported) {
+            if (((xCoord + MOVE_AMT >= 0 && xCoord + MOVE_AMT <= 115) && yCoord - MOVE_AMT >= 100) || (xCoord + MOVE_AMT >= 115 && xCoord + MOVE_AMT <= 145 && yCoord - MOVE_AMT >= 185) || (xCoord + MOVE_AMT >= 145 && yCoord - MOVE_AMT >= 110)) {
+                //
+                yCoord -= MOVE_AMT;
+            }
+        } else if (yCoord - MOVE_AMT >= 0) {
             yCoord -= MOVE_AMT;
         }
     }
 
     public void moveDown() {
-        if (((xCoord + MOVE_AMT <= 370 && xCoord + MOVE_AMT >= 160) && yCoord + MOVE_AMT <= 340) || (xCoord + MOVE_AMT >= 370 && yCoord + MOVE_AMT <= 260) || (xCoord + MOVE_AMT <= 160 && yCoord + MOVE_AMT <= 270)) {
+        if (!isTeleported) {
+            if (((xCoord + MOVE_AMT <= 370 && xCoord + MOVE_AMT >= 160) && yCoord + MOVE_AMT <= 330) || (xCoord + MOVE_AMT >= 370 && xCoord + MOVE_AMT < 500 && yCoord + MOVE_AMT <= 260) || (xCoord + MOVE_AMT <= 160 && yCoord + MOVE_AMT <= 270) || (xCoord + MOVE_AMT > 490 && xCoord + MOVE_AMT < 570 && yCoord + MOVE_AMT <= 190)) {
+                yCoord += MOVE_AMT;
+            }
+        } else if (yCoord <= 320) {
             yCoord += MOVE_AMT;
         }
+
     }
 
     public BufferedImage getPlayerImage() {
@@ -128,12 +166,30 @@ public class Player {
         return rect;
     }
 
+//    public boolean isTeleported() {
+//        return isTeleported;
+//    }
 
-    public boolean isTeleported() {
-        return isTeleported;
+    public void teleported(boolean t) {
+        isTeleported = t;
     }
 
-    public void teleported() {
-        isTeleported = !isTeleported;
+    public void formList() {
+        options.add("Bell Peppers");
+        options.add("Cabbage");
+        options.add("Grapes");
+        options.add("Strawberry Ice Cream");
+        options.add("Eggs");
+        options.add("Milk");
+        options.add("Hot Cocoa");
+        options.add("Strawberry Jam");
+        options.add("Potato Chips");
+
+        for (int i = 0; i <= 6; i++) {
+            int itemNum = (int) (Math.random() * options.size()) + 1;
+            //check if it generates correctly
+            groceries.add(options.get(itemNum));
+            options.remove(itemNum);
+        }
     }
 }
