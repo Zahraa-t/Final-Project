@@ -19,12 +19,27 @@ public class Enemy {
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
-        } else {
+        } else if (op == 2){
             try {
-//                image = ImageIO.read(new File("src/boxCatBIG2.png"));
+                image = ImageIO.read(new File("src/boxCatBIG2.png"));
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        } else if (op == 3){
+            try {
                 image = ImageIO.read(new File("src/cloud1.png"));
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        } else if (op == 4){
+            try {
+                image = ImageIO.read(new File("src/cloud2.png"));
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }else if (op == 5){
+            try {
                 image = ImageIO.read(new File("src/cloud3.png"));
-
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
@@ -37,14 +52,6 @@ public class Enemy {
 
     public int getyCoord() {
         return yCoord;
-    }
-
-    public int getHeight() {
-        return getPlayerImage().getHeight();
-    }
-
-    public int getWidth() {
-        return getPlayerImage().getWidth();
     }
 
     public BufferedImage getPlayerImage() {

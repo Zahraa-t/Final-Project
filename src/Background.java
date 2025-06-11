@@ -14,34 +14,33 @@ public class Background {
         }
     }
 
-    public void setBack(int num) {
+    public BufferedImage setBack(int num) {
         if (num == 1) {
             try {
-                back = ImageIO.read(new File("src/newStore.png"));
+                return ImageIO.read(new File("src/newStore.png"));
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
         } else if (num == 2) {
             try {
-                back = ImageIO.read(new File("src/produceBackground.png"));
+                return ImageIO.read(new File("src/produceBackground.png"));
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
         } else if (num == 3) {
             try {
-                back = ImageIO.read(new File("src/snackIsle.png"));
+                return ImageIO.read(new File("src/snackIsle.png"));
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
         } else {
             try {
-                back = ImageIO.read(new File("src/freezerBackground.png"));
+                return ImageIO.read(new File("src/freezerBackground.png"));
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
         }
-
-
+        return null;
     }
 
     public BufferedImage getBack() {

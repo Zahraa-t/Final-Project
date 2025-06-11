@@ -29,6 +29,9 @@ public class Player {
         isIdle = false;
         xCoord = 310;
         yCoord = 220;
+
+        xCoord = 70;
+        yCoord = 150;
         isTeleported = false;
         groceries = new ArrayList<>();
         options = new ArrayList<>();
@@ -166,10 +169,6 @@ public class Player {
         return rect;
     }
 
-//    public boolean isTeleported() {
-//        return isTeleported;
-//    }
-
     public void teleported(boolean t) {
         isTeleported = t;
     }
@@ -189,9 +188,6 @@ public class Player {
             int itemNum = (int) (Math.random() * options.size()-1) + 1;
             groceries.add(options.get(itemNum));
             options.remove(itemNum);
-        }
-        for (String e:groceries) {
-            System.out.println(e);
         }
     }
 
