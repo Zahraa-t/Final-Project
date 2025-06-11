@@ -10,9 +10,9 @@ public class Enemy {
     private int xCoord;
     private int yCoord;
 
-    public Enemy(int op) {
-        xCoord = 100;
-        yCoord = 100;
+    public Enemy(int op,int x,int y) {
+        xCoord = x;
+        yCoord = y;
         if (op == 1) {
             try {
                 image = ImageIO.read(new File("src/boxCat.png"));
@@ -37,6 +37,14 @@ public class Enemy {
 
     public int getyCoord() {
         return yCoord;
+    }
+
+    public int getHeight() {
+        return getPlayerImage().getHeight();
+    }
+
+    public int getWidth() {
+        return getPlayerImage().getWidth();
     }
 
     public BufferedImage getPlayerImage() {

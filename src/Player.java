@@ -186,10 +186,16 @@ public class Player {
         options.add("Potato Chips");
 
         for (int i = 0; i <= 6; i++) {
-            int itemNum = (int) (Math.random() * options.size()) + 1;
-            //check if it generates correctly
+            int itemNum = (int) (Math.random() * options.size()-1) + 1;
             groceries.add(options.get(itemNum));
             options.remove(itemNum);
         }
+        for (String e:groceries) {
+            System.out.println(e);
+        }
+    }
+
+    public ArrayList<String> getGroceries() {
+        return groceries;
     }
 }

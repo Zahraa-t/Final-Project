@@ -1,5 +1,4 @@
 import javax.swing.JPanel;
-import javax.swing.JButton;
 import java.awt.Graphics;
 import java.awt.Font;
 import java.awt.Color;
@@ -7,23 +6,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 
 public class DisplayPanel extends JPanel implements ActionListener, KeyListener, MouseListener {
     private BufferedImage background;
     private Player player;
     private boolean[] pressedKeys;
     private Timer timer;
-    private Timer timer2;
-
     private String area;
     private Background b;
     private Furniture shelves;
@@ -37,15 +29,25 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
     private Furniture books;
     private Furniture couch;
     private Furniture plant;
-    private Enemy cat;
+    private Enemy cat1;
     private Enemy cat2;
-    private Enemy cat3;
-    private int catX;
-    private int catY;
+    private Enemy cloud1;
+    private int cat1X;
+    private int cat2X;
+    private int cloud1Y;
     private int map;
-    private ArrayList<Rectangle> boxes;
+    private BufferedImage cover;
     private BufferedImage cabbage;
     private BufferedImage bellPepper;
+    private BufferedImage grapes;
+    private BufferedImage beef;
+    private BufferedImage strawberryIceCream;
+    private BufferedImage eggs;
+    private BufferedImage milk;
+    private BufferedImage hotCocoa;
+    private BufferedImage strawberryJam;
+    private BufferedImage potatoChips;
+
 
     public DisplayPanel() {
         b = new Background();
@@ -55,15 +57,14 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         pressedKeys = new boolean[128];
         timer = new Timer(10, this);
         timer.start();
-        timer2 = new Timer(0, this);
-        timer2.start();
         area = "Store";
-        catX = 0;
-        catY = 0;
         map = 0;
-        cat = new Enemy(1);
-        cat2 = new Enemy(1);
-        cat3 = new Enemy(2);
+        cat1 = new Enemy(1,100,100);
+        cat2 = new Enemy(1,100,200);
+        cloud1 = new Enemy(2,100, 0);
+        cat1X = cat1.getxCoord();
+        cat2X = cat2.getxCoord();
+        cloud1Y = cat1.getyCoord();
 
         shelves = new Furniture(0,45,1);
         shelves2 = new Furniture(145, shelves.getyCoord(),1);
@@ -76,10 +77,8 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         books = new Furniture(390, 305,6);
         couch = new Furniture(545,145,7);
         plant = new Furniture(545,130,8);
-//        boxes = new ArrayList<>(Arrays.asList(shelves.box(), fruits.box(),fruits2.box(), fridge.box(), register.box(),sideShelf.box(), sideShelf2.box(),books.box()));
-//        canMove = true;
-        boxes = new ArrayList<>(Arrays.asList(cat.enemyRect(catX),cat2.enemyRect(catX),cat3.enemyRect2(catY)));
 
+        player.formList();
         try {
             cabbage = ImageIO.read(new File("src/cabbage_p.png"));
         } catch (IOException e) {
@@ -87,6 +86,22 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         }
         try {
             bellPepper = ImageIO.read(new File("src/bell_pepper_p.png"));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            grapes = ImageIO.read(new File("src/Grapes.png"));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            beef = ImageIO.read(new File("src/beef.png"));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            cover = ImageIO.read(new File("src/StartCover.png"));
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -101,6 +116,8 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(background, 0, 0, null);
+        g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        g.setColor(Color.black);
 
         if (map == 0) {
             g.drawImage(shelves.getImage(), shelves.getxCoord(), shelves.getyCoord(), null);
@@ -117,8 +134,6 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
             g.drawImage(sideShelf.getImage(), 125, 60, null);
             g.drawImage(sideShelf2.getImage(), 125, 110, null);
 
-            g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-            g.setColor(Color.black);
             g.drawString(area,540,50);
 
             if (player.playerRect().intersects(shelves.box())) {
@@ -146,19 +161,33 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
             g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
             g.setColor(Color.white);
             g.drawString(area,520,50);
-            g.drawImage(cat.getPlayerImage(), catX, cat.getyCoord(), null);
-            g.drawImage(cat2.getPlayerImage(), catX, cat.getyCoord() + 100, null);
-            g.drawImage(cat3.getPlayerImage(), cat.getxCoord(), catY, null);
-            g.drawImage(cabbage,245,50, null);
-            for (Rectangle box : boxes) {
-                if (player.playerRect().intersects(box)) {
+            g.drawImage(cat1.getPlayerImage(), cat1X, cat1.getyCoord(), null);
+            g.drawImage(cat2.getPlayerImage(), cat2X, cat2.getyCoord(), null);
+            g.drawImage(cloud1.getPlayerImage(), cloud1.getxCoord(), cloud1Y, null);
+            if (player.playerRect().intersects(cat1.enemyRect(cat1X))) {
                     player.respawn();
-                }
             }
+            if (player.playerRect().intersects(cat2.enemyRect(cat1X))) {
+                player.respawn();
+            }
+            if (player.playerRect().intersects(cloud1.enemyRect2(cloud1Y))) {
+                player.respawn();
+            }
+
         }
 
         g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), player.getWidth(), player.getHeight(), null);
-
+        if (pressedKeys[76]) {
+            g.drawImage(cover,380,90,null);
+            g.setFont(new Font("Times New Roman", Font.ITALIC+Font.BOLD, 13));
+            g.setColor(Color.white);
+            int a = 0;
+            for (String s: player.getGroceries()) {
+                g.drawString(s, 400,110+a);
+                a+=20;
+            }
+            //when collected, they should be crossed out
+        }
 
         if (pressedKeys[65]) {
             player.setIdle(false);
@@ -188,17 +217,18 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
     @Override
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
-        if (o == timer2) {
-            catX++;
-            if (catX > 580) {
-                catX = 0;
+        if (o == timer) {
+            cat1X++;
+            cat2X++;
+            if (cat1X > 580) {
+                cat1X = 0;
+                cat2X = 0;
             }
-            catY++;
-            if (catY > 300) {
-                catY = 0;
+            cloud1Y++;
+            if (cloud1Y > 300) {
+                cloud1Y = 0;
             }
         }
-
         repaint();
     }
 
@@ -220,6 +250,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
         pressedKeys[key] = false;
+
     }
 
     @Override
