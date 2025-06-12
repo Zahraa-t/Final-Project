@@ -288,6 +288,9 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
                 if (player.playerRect().intersects(cloudHorizontal2S.enemyRect(cloud2XS))) {
                     player.respawn();
                 }
+                if (player.playerRect().intersects(cloudHorizontal3S.enemyRect(cloud3XS))) {
+                    player.respawn();
+                }
                 if (player.playerRect().intersects(cloud1S.enemyRect2(cloudYS))) {
                     player.respawn();
                 }
