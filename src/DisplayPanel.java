@@ -202,8 +202,6 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         g.setColor(Color.black);
 
-
-
         if (!done) {
             g.drawImage(background, 0, 0, null);
             if (showButton) {
@@ -287,7 +285,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
                 if (player.playerRect().intersects(cloudHorizontal1S.enemyRect(cloud1XS))) {
                     player.respawn();
                 }
-                if (player.playerRect().intersects(cloudHorizontal2S.enemyRect(cloud1XS))) {
+                if (player.playerRect().intersects(cloudHorizontal2S.enemyRect(cloud2XS))) {
                     player.respawn();
                 }
                 if (player.playerRect().intersects(cloud1S.enemyRect2(cloudYS))) {
@@ -296,7 +294,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
                 if (player.playerRect().intersects(cloud2S.enemyRect2(cloudY2S))) {
                     player.respawn();
                 }
-                if (player.playerRect().intersects(cloud3S.enemyRect2(cloudY2S))) {
+                if (player.playerRect().intersects(cloud3S.enemyRect2(cloudY3S))) {
                     player.respawn();
                 }
                 if (player.playerRect().intersects(teleport1.PortalRect())) {
@@ -304,6 +302,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
                     background = b.setBack(1);
                     player.spawnPoint(300,220);
                     player.respawn();
+                    area = "Store";
                 }
                 if (player.playerRect().intersects(hotCocoa.box())) {
                     hotCocoa.setCollected(true);
@@ -350,6 +349,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
                     background = b.setBack(1);
                     player.spawnPoint(300,220);
                     player.respawn();
+                    area = "Store";
                 }
                 if (player.playerRect().intersects(cloud1P.enemyRect(cloud1XP))) {
                     player.respawn();
@@ -415,6 +415,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
                     background = b.setBack(1);
                     player.spawnPoint(300,220);
                     player.respawn();
+                    area = "Store";
                 }
             }
 
@@ -453,15 +454,16 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
                     player.setIdle(true);
                 }
             }
-            for (GroceryItem item :items) {
-                if (item.isCollected()) {
-                    done = true;
-                } else {
+            done = true;
+            for (GroceryItem item : items) {
+                if (!item.isCollected()) {
                     done = false;
                 }
             }
         } else {
-            background  = b.setBack(5);
+            background = b.setBack(5);
+            g.drawImage(background, 0, 0, null);
+            g.setColor(Color.yellow);
             g.setFont(new Font("Times New Roman", Font.BOLD, 30));
             g.drawString("You're done shopping", 170,130);
             g.setFont(new Font("Times New Roman", Font.BOLD, 30));
@@ -538,7 +540,6 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
     // KeyListener interface methods
     @Override
     public void keyTyped(KeyEvent e) { } // unimplemented
-
 
 
     @Override
