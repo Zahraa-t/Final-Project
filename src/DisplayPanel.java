@@ -212,6 +212,8 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
                 g.setFont(new Font("Times New Roman", Font.BOLD, 30));
                 g.drawString("\uD83C\uDD76\uD83C\uDD81\uD83C\uDD7E\uD83C\uDD72\uD83C\uDD74\uD83C\uDD81\uD83C\uDD88 \uD83C\uDD82\uD83C\uDD77\uD83C\uDD7E\uD83C\uDD7F\uD83C\uDD7F\uD83C\uDD78\uD83C\uDD7D\uD83C\uDD76", 80,150);
                 g.drawString("\uD83D\uDED2", 260,256);
+                g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+                g.drawString("press q to see list", 420,360);
             } else {
                 remove(button);
             }
@@ -306,6 +308,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
                     player.spawnPoint(300,220);
                     player.respawn();
                     area = "Store";
+                    player.teleported(false);
                 }
                 if (player.playerRect().intersects(hotCocoa.box())) {
                     hotCocoa.setCollected(true);
@@ -353,6 +356,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
                     player.spawnPoint(300,220);
                     player.respawn();
                     area = "Store";
+                    player.teleported(false);
                 }
                 if (player.playerRect().intersects(cloud1P.enemyRect(cloud1XP))) {
                     player.respawn();
@@ -419,22 +423,23 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
                     player.spawnPoint(300,220);
                     player.respawn();
                     area = "Store";
+                    player.teleported(false);
                 }
             }
 
             g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), player.getWidth(), player.getHeight(), null);
-            if (pressedKeys[81]) {
-                g.drawImage(cover,380,90,null);
-                g.setFont(new Font("Times New Roman", Font.ITALIC+Font.BOLD, 12));
-                g.setColor(Color.white);
-                int a = 0;
-                for (String s: player.getGroceries()) {
-                    g.drawString(s, 400,110+a);
-                    a+=15;
-                }
-            }
 
             if (!showButton) {
+                if (pressedKeys[81]) {
+                    g.drawImage(cover,380,90,null);
+                    g.setFont(new Font("Times New Roman", Font.ITALIC+Font.BOLD, 12));
+                    g.setColor(Color.white);
+                    int a = 0;
+                    for (String s: player.getGroceries()) {
+                        g.drawString(s, 400,110+a);
+                        a+=15;
+                    }
+                }
                 if (pressedKeys[65]) {
                     player.setIdle(false);
                     player.faceLeft();
