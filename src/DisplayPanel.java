@@ -105,7 +105,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener,
         cloud1XP = cloud1P.getxCoord();
         cloud2P = new Enemy(4,220,240);
         cloud2XP = cloud1P.getxCoord();
-        teleport2 = new Portal(30,310);
+        teleport2 = new Portal(30,250);
 
         cloud1F = new Enemy(3, 20,170);
         cloud1YF = cloud1F.getyCoord();;
