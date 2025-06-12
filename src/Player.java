@@ -12,29 +12,23 @@ public class Player {
     private BufferedImage image;
     private boolean facingRight;
     private boolean isIdle;
-    private boolean isJump;
     private int xCoord;
     private int yCoord;
     private Animation walking;
     private Animation idling;
     private boolean isTeleported;
     private ArrayList<String> groceries;
-    private ArrayList<String> options;
     private int xStarting;
     private int yStarting;
 
 
     public Player() {
-        facingRight = true;
+        facingRight = false;
         isIdle = false;
-        xCoord = 310;
+        xCoord = 290;
         yCoord = 220;
-
-        xCoord = 70;
-        yCoord = 150;
         isTeleported = false;
         groceries = new ArrayList<>();
-        options = new ArrayList<>();
         xStarting = 310;
         yStarting = 320;
 
@@ -174,21 +168,15 @@ public class Player {
     }
 
     public void formList() {
-        options.add("Bell Peppers");
-        options.add("Cabbage");
-        options.add("Grapes");
-        options.add("Strawberry Ice Cream");
-        options.add("Eggs");
-        options.add("Milk");
-        options.add("Hot Cocoa");
-        options.add("Strawberry Jam");
-        options.add("Potato Chips");
-
-        for (int i = 0; i <= 6; i++) {
-            int itemNum = (int) (Math.random() * options.size()-1) + 1;
-            groceries.add(options.get(itemNum));
-            options.remove(itemNum);
-        }
+        groceries.add("Bell Peppers");
+        groceries.add("Cabbage");
+        groceries.add("Grapes");
+        groceries.add("Strawberry Ice Cream");
+        groceries.add("Eggs");
+        groceries.add("Milk");
+        groceries.add("Hot Cocoa");
+        groceries.add("Strawberry Jam");
+        groceries.add("Potato Chips");
     }
 
     public ArrayList<String> getGroceries() {

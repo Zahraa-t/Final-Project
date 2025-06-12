@@ -13,19 +13,7 @@ public class Enemy {
     public Enemy(int op,int x,int y) {
         xCoord = x;
         yCoord = y;
-        if (op == 1) {
-            try {
-                image = ImageIO.read(new File("src/boxCat.png"));
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        } else if (op == 2){
-            try {
-                image = ImageIO.read(new File("src/boxCatBIG2.png"));
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        } else if (op == 3){
+        if (op == 3){
             try {
                 image = ImageIO.read(new File("src/cloud1.png"));
             } catch (IOException e) {

@@ -33,9 +33,21 @@ public class Background {
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
-        } else {
+        } else if (num == 4) {
             try {
                 return ImageIO.read(new File("src/freezerBackground.png"));
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        } else if (num == 5) {
+            try {
+                return ImageIO.read(new File("src/ending.jpg"));
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        } else if (num == 6) {
+            try {
+                return ImageIO.read(new File("src/startingTitleCover.jpg"));
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
