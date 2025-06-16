@@ -25,7 +25,7 @@ public class Player {
     public Player() {
         facingRight = false;
         isIdle = false;
-        xCoord = 290;
+        xCoord = 280;
         yCoord = 220;
         isTeleported = false;
         groceries = new ArrayList<>();
